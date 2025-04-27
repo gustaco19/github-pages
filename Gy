@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <title>Carrinho Insano com SUS</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      text-align: center;
+      font-family: sans-serif;
+      background-color: white;
+      transition: background-color 0.2s;
+    }
+
+    #carrinho {
+      font-size: 120px;
+      position: absolute;
+      top: 100px;
+      left: -200px;
+      transition: left 4s linear;
+      animation: pisca-luz 0.5s infinite;
+    }
+
+    @keyframes pisca-luz {
+      0%, 100% { text-shadow: 0 0 20px yellow; }
+      50% { text-shadow: 0 0 40px red; }
+    }
+
+    #explosao {
+      display: none;
+      font-size: 80px;
+      position: absolute;
+      top: 150px;
+      width: 100%;
+      text-align: center;
+      animation: tremer 0.3s infinite;
+    }
+
+    @keyframes tremer {
+      0% { transform: translateX(-5px); }
+      50% { transform: translateX(5px); }
+      100% { transform: translateX(-5px); }
+    }
+
+    #pergunta {
+      display: none;
+      margin-top: 250px;
+      font-size: 28px;
+    }
+
+    button {
+      margin: 10px;
+      font-size: 20px;
+      padding: 12px 24px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="carrinho">🚗</div>
+  <div id="explosao">💥🔥 BOOM! 🔥💥</div>
+
+  <div id="pergunta">
+    <p>Vc é gay?</p>
+    <button onclick="responder('sim')">Sim</button>
+    <button onclick="responder('nao')">Não</button>
+  </div>
+
+  <!-- Sons -->
+  <audio id="buzina" src="https://www.myinstants.com/media/sounds/car-horn.mp3"></audio>
+  <audio id="derrp" src="https://www.myinstants.com/media/sounds/skrrt.mp3"></audio>
+  <audio id="boom" src="https://www.myinstants.com/media/sounds/vine-boom.mp3"></audio>
+  <audio id="sus" src="https://www.myinstants.com/media/sounds/among-us-sus.mp3"></audio>
+
+  <script>
+    const carrinho = document.getElementById("carrinho");
+    const explosao = document.getElementById("explosao");
+
+    // Carrinho vai pra frente
+    setTimeout(() => {
+      carrinho.style.left = "100%";
+      document.getElementById("buzina").play();
+    }, 100);
+
+    // Carrinho dá ré
+    setTimeout(() => {
+      carrinho.style.left = "30%";
+    }, 4500);
+
+    // Explosão + pergunta
+    setTimeout(() => {
+      explosao.style.display = "block";
+      document.getElementById("boom").play();
+    }, 6500);
+
+    setTimeout(() => {
+      explosao.style.display = "none";
+      document.getElementById("pergunta").style.display = "block";
+    }, 8000);
+
+    function responder(resposta) {
+      const boom = document.getElementById("boom");
+      const derrp = document.getElementById("derrp");
+      const sus = document.getElementById("sus");
+
+      if (resposta === 'sim') {
+        boom.play();
+        alert("Você escolheu sim.");
+      } else {
+        derrp.play();
+        sus.play();
+        piscarTela();
+        alert("Você escolheu sim.");
+      }
+    }
+
+    function piscarTela() {
+      let count = 0;
+      const interval = setInterval(() => {
+        document.body.style.backgroundColor = (count % 2 === 0) ? 'black' : 'white';
+        count++;
+        if (count > 5) {
+          clearInterval(interval);
+          document.body.style.backgroundColor = 'white';
+        }
+      }, 100);
+    }
+  </script>
+
+</body>
+</html>
